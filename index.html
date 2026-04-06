@@ -5,7 +5,7 @@
   <title>Era uma vez...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonte elegante -->
+  <!-- Fontes -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
@@ -13,121 +13,142 @@
       margin: 0;
       font-family: 'Cinzel', serif;
       color: #f5e6c8;
-      text-align: center;
-      background: radial-gradient(circle at top, #1a1a1a, #000000);
+      background: #000;
       overflow-x: hidden;
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 25px;
-      animation: fadeIn 2s ease-in-out;
+      text-align: center;
+      padding: 30px;
     }
 
     .title {
       font-family: 'Great Vibes', cursive;
       font-size: 42px;
+      color: gold;
       margin-bottom: 20px;
-      color: #ffd700;
-      text-shadow: 0 0 10px rgba(255,215,0,0.6);
+      text-shadow: 0 0 15px rgba(255,215,0,0.6);
     }
 
     .photo {
       width: 90%;
       max-width: 380px;
       border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255,215,0,0.3);
-      margin-bottom: 25px;
-      border: 2px solid rgba(255,215,0,0.4);
+      border: 2px solid gold;
+      box-shadow: 0 0 30px rgba(255,215,0,0.4);
+      margin-bottom: 30px;
     }
 
-    p {
+    .text-block {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+      margin-bottom: 20px;
       font-size: 18px;
-      max-width: 520px;
       line-height: 1.6;
-      margin-bottom: 35px;
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .btn {
+      display: inline-block;
+      margin-top: 30px;
       background: linear-gradient(45deg, #d4af37, #ffd700);
       color: black;
       padding: 15px 30px;
-      border: none;
       border-radius: 40px;
-      font-size: 18px;
-      cursor: pointer;
       text-decoration: none;
       font-weight: bold;
-      box-shadow: 0 0 15px rgba(255,215,0,0.5);
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
       transition: 0.3s;
     }
 
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(255,215,0,0.8);
     }
 
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    /* brilho suave no fundo */
-    body::before {
-      content: "";
+    /* estrelas */
+    .stars {
       position: fixed;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,215,0,0.05), transparent 70%);
-      animation: moveGlow 10s linear infinite;
-      top: -50%;
-      left: -50%;
+      width: 100%;
+      height: 100%;
+      background: transparent url('https://www.transparenttextures.com/patterns/stardust.png');
+      animation: moveStars 60s linear infinite;
       z-index: -1;
     }
 
-    @keyframes moveGlow {
-      0% { transform: translate(0,0); }
-      50% { transform: translate(50px,50px); }
-      100% { transform: translate(0,0); }
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: 10000px 5000px; }
     }
 
   </style>
 </head>
 
 <body>
-  <div class="container">
 
-    <div class="title">Era uma vez...</div>
+<div class="stars"></div>
 
-    <!-- FOTO -->
-    <img src="IMG.PNG" alt="Princesa Talita" class="photo">
+<!-- Música -->
+<audio autoplay loop>
+  <source src="Áudio.mp3" type="audio/mpeg">
+</audio>
 
-    <!-- TEXTO -->
-    <p>
-      Em um reino muito distante, chamado Paulínia…<br><br>
+<div class="container">
 
-      morava uma princesa chamada Talita.<br><br>
+  <div class="title">Era uma vez...</div>
 
-      A princesa Talita era uma mulher maravilhosa, incrível, cheia de sonhos…<br>
-      fiel ao Senhor e de coração puro.<br><br>
+  <img src="IMG.PNG" class="photo">
 
-      Ela acreditava que, um dia, encontraria o seu príncipe encantado…<br>
-      aquele que caminharia ao seu lado.<br><br>
+  <div class="text-block">Em um reino muito distante, chamado Paulínia…</div>
 
-      Mas essa princesa também era forte e guerreira,<br>
-      tendo enfrentado inúmeras batalhas…<br>
-      e mesmo assim, nunca deixou de acreditar no amor.<br><br>
+  <div class="text-block">morava uma princesa chamada Talita.</div>
 
-      <strong>E mal sabia ela… que sua história estava prestes a mudar.</strong>
-    </p>
-
-    <!-- BOTÃO -->
-    <a href="pagina2.html" class="btn">Descobrir o segredo 👀</a>
-
+  <div class="text-block">
+    A princesa Talita era uma mulher maravilhosa, incrível, cheia de sonhos…<br>
+    fiel ao Senhor e de coração puro.
   </div>
+
+  <div class="text-block">
+    Ela acreditava que, um dia, encontraria o seu príncipe encantado…<br>
+    aquele que caminharia ao seu lado.
+  </div>
+
+  <div class="text-block">
+    Mas essa princesa também era forte e guerreira,<br>
+    tendo enfrentado inúmeras batalhas…<br>
+    e mesmo assim, nunca deixou de acreditar no amor.
+  </div>
+
+  <div class="text-block">
+    <strong>E mal sabia ela… que sua história estava prestes a mudar.</strong>
+  </div>
+
+  <a href="pagina2.html" class="btn">Descubra Como  👀</a>
+
+</div>
+
+<script>
+  const blocks = document.querySelectorAll('.text-block');
+
+  const revealOnScroll = () => {
+    const trigger = window.innerHeight * 0.85;
+
+    blocks.forEach(block => {
+      const top = block.getBoundingClientRect().top;
+
+      if (top < trigger) {
+        block.classList.add('show');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+</script>
+
 </body>
 </html>
