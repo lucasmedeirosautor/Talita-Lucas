@@ -5,8 +5,7 @@
   <title>Era uma vez...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fontes -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -14,11 +13,11 @@
       font-family: 'Cinzel', serif;
       color: #f5e6c8;
       background: #000;
+      text-align: center;
       overflow-x: hidden;
     }
 
     .container {
-      text-align: center;
       padding: 30px;
     }
 
@@ -35,33 +34,26 @@
       max-width: 380px;
       border-radius: 20px;
       border: 2px solid gold;
-      box-shadow: 0 0 30px rgba(255,215,0,0.4);
       margin-bottom: 30px;
+      box-shadow: 0 0 30px rgba(255,215,0,0.4);
     }
 
     .text-block {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s ease;
-      margin-bottom: 20px;
       font-size: 18px;
-      line-height: 1.6;
-    }
-
-    .show {
-      opacity: 1;
-      transform: translateY(0);
+      margin: 30px 0;
+      min-height: 50px;
     }
 
     .btn {
-      display: inline-block;
-      margin-top: 30px;
       background: linear-gradient(45deg, #d4af37, #ffd700);
       color: black;
-      padding: 15px 30px;
+      padding: 15px 25px;
       border-radius: 40px;
       text-decoration: none;
+      display: inline-block;
+      margin-top: 30px;
       font-weight: bold;
+      cursor: pointer;
       box-shadow: 0 0 20px rgba(255,215,0,0.6);
       transition: 0.3s;
     }
@@ -70,7 +62,6 @@
       transform: scale(1.05);
     }
 
-    /* estrelas */
     .stars {
       position: fixed;
       width: 100%;
@@ -84,7 +75,6 @@
       from { background-position: 0 0; }
       to { background-position: 10000px 5000px; }
     }
-
   </style>
 </head>
 
@@ -92,8 +82,8 @@
 
 <div class="stars"></div>
 
-<!-- Música -->
-<audio autoplay loop>
+<!-- Áudio -->
+<audio id="musica" loop>
   <source src="Áudio.mp3" type="audio/mpeg">
 </audio>
 
@@ -103,51 +93,60 @@
 
   <img src="IMG.PNG" class="photo">
 
-  <div class="text-block">Em um reino muito distante, chamado Paulínia…</div>
+  <!-- Botão para ativar música -->
+  <button onclick="tocarMusica()" class="btn">🔊 Ativar música</button>
 
-  <div class="text-block">morava uma princesa chamada Talita.</div>
+  <div class="text-block" data-text="Em um reino muito distante, chamado Paulínia…"></div>
 
-  <div class="text-block">
-    A princesa Talita era uma mulher maravilhosa, incrível, cheia de sonhos…<br>
-    fiel ao Senhor e de coração puro.
-  </div>
+  <div class="text-block" data-text="morava uma princesa chamada Talita."></div>
 
-  <div class="text-block">
-    Ela acreditava que, um dia, encontraria o seu príncipe encantado…<br>
-    aquele que caminharia ao seu lado.
-  </div>
+  <div class="text-block" data-text="A princesa Talita era uma mulher maravilhosa, incrível, cheia de sonhos… fiel ao Senhor e de coração puro."></div>
 
-  <div class="text-block">
-    Mas essa princesa também era forte e guerreira,<br>
-    tendo enfrentado inúmeras batalhas…<br>
-    e mesmo assim, nunca deixou de acreditar no amor.
-  </div>
+  <div class="text-block" data-text="Ela acreditava que, um dia, encontraria o seu príncipe encantado… aquele que caminharia ao seu lado."></div>
 
-  <div class="text-block">
-    <strong>E mal sabia ela… que sua história estava prestes a mudar.</strong>
-  </div>
+  <div class="text-block" data-text="Mas essa princesa também era forte e guerreira, tendo enfrentado inúmeras batalhas… e mesmo assim, nunca deixou de acreditar no amor."></div>
 
-  <a href="pagina2.html" class="btn">Descubra Como  👀</a>
+  <div class="text-block" data-text="E mal sabia ela… que sua história estava prestes a mudar."></div>
+
+  <a href="pagina2.html" class="btn">Descobrir Como 👀</a>
 
 </div>
 
 <script>
+  // Função para tocar música
+  function tocarMusica() {
+    const audio = document.getElementById("musica");
+    audio.play();
+  }
+
+  // Efeito de digitação ao rolar a tela
   const blocks = document.querySelectorAll('.text-block');
 
-  const revealOnScroll = () => {
-    const trigger = window.innerHeight * 0.85;
+  function typeEffect(element, text, speed = 40) {
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      }
+    }
+    typing();
+  }
 
+  function handleScroll() {
+    const trigger = window.innerHeight * 0.85;
     blocks.forEach(block => {
       const top = block.getBoundingClientRect().top;
-
-      if (top < trigger) {
-        block.classList.add('show');
+      if (top < trigger && !block.classList.contains('typed')) {
+        block.classList.add('typed');
+        typeEffect(block, block.getAttribute('data-text'));
       }
     });
-  };
+  }
 
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll);
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('load', handleScroll);
 </script>
 
 </body>
