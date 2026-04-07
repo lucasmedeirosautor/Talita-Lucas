@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
-    body {
+    body{
       margin: 0;
       font-family: 'Cinzel', serif;
       color: #f5e6c8;
@@ -17,11 +17,11 @@
       overflow-x: hidden;
     }
 
-    .container {
+    .container{
       padding: 30px;
     }
 
-    .title {
+    .title{
       font-family: 'Great Vibes', cursive;
       font-size: 42px;
       color: gold;
@@ -29,7 +29,7 @@
       text-shadow: 0 0 15px rgba(255,215,0,0.6);
     }
 
-    .photo {
+    .photo{
       width: 90%;
       max-width: 380px;
       border-radius: 20px;
@@ -38,13 +38,13 @@
       box-shadow: 0 0 30px rgba(255,215,0,0.4);
     }
 
-    .text-block {
+    .text-block{
       font-size: 18px;
       margin: 30px 0;
       min-height: 50px;
     }
 
-    .btn {
+    .button{
       background: linear-gradient(45deg, #d4af37, #ffd700);
       color: black;
       padding: 15px 25px;
@@ -58,11 +58,11 @@
       transition: 0.3s;
     }
 
-    .btn:hover {
+    .button:hover{
       transform: scale(1.05);
     }
 
-    .stars {
+    .stars{
       position: fixed;
       width: 100%;
       height: 100%;
@@ -72,8 +72,8 @@
     }
 
     @keyframes moveStars {
-      from { background-position: 0 0; }
-      to { background-position: 10000px 5000px; }
+      from {background-position: 0 0;}
+      to {background-position: 10000px 5000px;}
     }
   </style>
 </head>
@@ -83,7 +83,7 @@
 <div class="stars"></div>
 
 <!-- Áudio -->
-<audio id="musica" loop>
+<audio id="music" loop>
   <source src="Musica.mp3" type="audio/mpeg">
 </audio>
 
@@ -94,7 +94,7 @@
   <img src="IMG.PNG" class="photo">
 
   <!-- Botão para ativar música -->
-  <button onclick="tocarMusica()" class="btn">🔊 Ativar música</button>
+  <button onclick="playMusic()" class="button">🔊 Ativar música</button>
 
   <div class="text-block" data-text="Em um reino muito distante, chamado Paulínia…"></div>
 
@@ -104,49 +104,50 @@
 
   <div class="text-block" data-text="Mas essa princesa também era forte e guerreira, tendo enfrentado inúmeras batalhas… e mesmo assim, nunca deixou de acreditar no amor."></div>
 
-  <div class="text-block" data-text="Ela acreditava que, um dia, encontraria o seu príncipe encantado… aquele que caminharia ao seu lado, e juntos teria um Reino muito forte e abencoado por Deus "></div>
+  <div class="text-block" data-text="Ela acreditava que, um dia, encontraria o seu príncipe encantado… aquele que caminharia ao seu lado, e juntos teriam um Reino muito forte e abençoado por Deus."></div>
 
-  <div class="text-block" data-text="E mal sabia ela… que sua história estava prestes a Mudar "></div>
+  <div class="text-block" data-text="E mal sabia ela… que sua história estava prestes a mudar."></div>
 
-  <a href="https://lucasmedeirosautor.github.io/Surpresa-2/" class="btn">Descobrir Como 👀</a>
+  <a href="https://lucasmedeirosautor.github.io/Surpresa-2/" class="button">Descobrir Como 👀</a>
 
 </div>
 
 <script>
-  // Função para tocar música
-  function tocarMusica() {
-    const audio = document.getElementById("musica");
-    audio.play();
-  }
-
-  // Efeito de digitação ao rolar a tela
   const blocks = document.querySelectorAll('.text-block');
 
   function typeEffect(element, text, speed = 40) {
-    let i = 0;
-    function typing() {
-      if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typing, speed);
-      }
-    }
-    typing();
-  }
+    return new Promise(resolve => {
+      let i = 0;
 
-  function handleScroll() {
-    const trigger = window.innerHeight * 0.85;
-    blocks.forEach(block => {
-      const top = block.getBoundingClientRect().top;
-      if (top < trigger && !block.classList.contains('typed')) {
-        block.classList.add('typed');
-        typeEffect(block, block.getAttribute('data-text'));
+      function typing() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else {
+          resolve();
+        }
       }
+
+      typing();
     });
   }
 
-  window.addEventListener('scroll', handleScroll);
-  window.addEventListener('load', handleScroll);
+  async function startSequence() {
+    for (let block of blocks) {
+      const text = block.getAttribute('data-text');
+      await typeEffect(block, text);
+      await new Promise(r => setTimeout(r, 800));
+    }
+  }
+
+  window.addEventListener('load', startSequence);
+
+  // Música
+  function playMusic(){
+    const music = document.getElementById("music");
+    music.play();
+  }
 </script>
 
 </body>
