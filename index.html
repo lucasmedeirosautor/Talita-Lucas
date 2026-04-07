@@ -44,22 +44,42 @@
       min-height: 50px;
     }
 
+    /* BOTÃO ESTILO PRINCESA */
     .button{
       background: linear-gradient(45deg, #d4af37, #ffd700);
       color: black;
-      padding: 15px 25px;
-      border-radius: 40px;
+      padding: 18px 35px;
+      border-radius: 50px;
       text-decoration: none;
       display: inline-block;
-      margin-top: 30px;
+      margin-top: 40px;
       font-weight: bold;
+      font-size: 18px;
+      letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(255,215,0,0.6);
-      transition: 0.3s;
+      box-shadow: 0 0 25px rgba(255,215,0,0.8);
+      transition: 0.4s;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
     }
 
     .button:hover{
-      transform: scale(1.05);
+      transform: scale(1.08);
+      box-shadow: 0 0 35px rgba(255,215,0,1);
+    }
+
+    /* Quando aparece */
+    .button.show{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+      to { box-shadow: 0 0 40px rgba(255,215,0,1); }
     }
 
     .stars{
@@ -93,8 +113,10 @@
 
   <img src="IMG.PNG" class="photo">
 
-  <!-- Botão para ativar música -->
-  <button onclick="playMusic()" class="button">🔊 Ativar música</button>
+  <!-- Botão música -->
+  <button onclick="playMusic()" class="button" style="opacity:1; transform:none; pointer-events:auto;">
+    🔊 Ativar música
+  </button>
 
   <div class="text-block" data-text="Em um reino muito distante, chamado Paulínia…"></div>
 
@@ -108,12 +130,16 @@
 
   <div class="text-block" data-text="E mal sabia ela… que sua história estava prestes a mudar."></div>
 
-  <a href="https://lucasmedeirosautor.github.io/Surpresa-2/" class="button">Descobrir Como 👀</a>
+  <!-- BOTÃO FINAL (ESCONDIDO) -->
+  <a id="finalButton" href="https://lucasmedeirosautor.github.io/Surpresa-2/" class="button">
+    ✨ Descobrir o próximo capítulo 👑
+  </a>
 
 </div>
 
 <script>
   const blocks = document.querySelectorAll('.text-block');
+  const finalButton = document.getElementById('finalButton');
 
   function typeEffect(element, text, speed = 40) {
     return new Promise(resolve => {
@@ -139,11 +165,13 @@
       await typeEffect(block, text);
       await new Promise(r => setTimeout(r, 800));
     }
+
+    // MOSTRAR BOTÃO NO FINAL
+    finalButton.classList.add('show');
   }
 
   window.addEventListener('load', startSequence);
 
-  // Música
   function playMusic(){
     const music = document.getElementById("music");
     music.play();
